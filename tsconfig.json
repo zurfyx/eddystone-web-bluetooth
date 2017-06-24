@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    /* Basic Options */ 
+    "target": "es5",
+    "module": "commonjs",
+    "lib": ["es2015", "es2016", "es2017"],
+    "declaration": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "noEmitHelpers": true,
+    "importHelpers": true,
+                                              
+    /* Strict Type-Checking Options */        
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+                                              
+    /* Additional Checks */                   
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+                                              
+    /* Module Resolution Options */           
+    "moduleResolution": "node",
+    "baseUrl": "./src",
+                                              
+    /* Experimental Options */                
+    "experimentalDecorators": true
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "name": "eddystone-web-bluetooth",
+  "description": "Eddystone Web Bluetooth client (works with Physical Web).",
+  "author": {
+    "name": "Gerard Rovira Sánchez",
+    "email": "zurfyx@gmail.com",
+    "url": "zurfyx.com"
+  },
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prebuild": "npm run build:clean",
+    "build": "tsc",
+    "build:clean": "rimraf dist",
+    "build:watch": "tsc --watch",
+    "prepublishOnly": "npm run build",
+    "postpublish": "npm run build:clean",
+    "lint": "tslint './src/**/*.{ts,tsx}' --project ./tsconfig.json --type-check",
+    "pretest": "npm run build",
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "check": "npm-run-all test lint build:clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zurfyx/eddystone-web-bluetooth.git"
+  },
+  "keywords": [
+    "eddystone",
+    "web",
+    "bluetooth",
+    "client",
+    "config",
+    "url",
+    "typescript"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zurfyx/eddystone-web-bluetooth/issues"
+  },
+  "homepage": "https://github.com/zurfyx/eddystone-web-bluetooth#readme",
+  "dependencies": {
+    "@types/node": "^8.0.0",
+    "tslib": "^1.7.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^20.0.0",
+    "jest": "^20.0.4",
+    "npm-run-all": "^4.0.2",
+    "rimraf": "^2.6.1",
+    "ts-jest": "^20.0.6",
+    "tslint": "^5.4.3",
+    "tslint-config-airbnb": "^5.1.2",
+    "typescript": "^2.3.4"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  }
+}

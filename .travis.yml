@@ -1,0 +1,16 @@
+sudo: false
+
+language: node_js
+node_js:
+  - 8
+
+install:
+  - npm install
+  - npm install --global coveralls@^2.0.0
+
+script:
+  - npm run lint
+  - npm run coverage
+
+after_success:
+  - cat ./coverage/lcov.info | coveralls
