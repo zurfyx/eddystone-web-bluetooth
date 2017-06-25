@@ -1,18 +1,6 @@
 import constants from '../constants';
-import { decodeUrl } from './url';
-
-enum LOCK_VALUES {
-  LOCKED = 0x00,
-  UNLOCKED = 0x01,
-  UNLOCKED_AND_AUTOMATIC_RELOCK_DISABLED = 0x02,
-}
-
-enum DATA_VALUES {
-  UID = 0x00,
-  URL = 0x10,
-  TLM = 0x20,
-  EID = 0x40,
-}
+import { LOCK_VALUES, DATA_VALUES } from './enums';
+import { decodeUrl, encodeUrl } from './url';
 
 export class BeaconService {
 
@@ -21,6 +9,11 @@ export class BeaconService {
   private async readCharacteristic(uuid: string): Promise<DataView> {
     const characteristic = await this.service.getCharacteristic(uuid);
     return characteristic.readValue();
+  }
+
+  private async writeCharacteristic(uuid: string, value: BufferSource | Int8Array): Promise<void> {
+    const characteristic = await this.service.getCharacteristic(uuid);
+    return characteristic.writeValue(value);
   }
 
   async isLocked(): Promise<boolean> {
@@ -39,5 +32,11 @@ export class BeaconService {
     }
     const rawUrl = new DataView(rawVal.buffer, 2); // w/o type.
     return decodeUrl(rawUrl);
+  }
+
+  async clearUrl(): Promise<void> {
+    const uuid = constants.ADV_SLOT_DATA_CHARACTERISTIC_UUID;
+    const clearByte = new Int8Array([0x00]);
+    return this.writeCharacteristic(uuid, clearByte);
   }
 }

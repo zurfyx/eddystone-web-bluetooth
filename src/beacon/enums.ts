@@ -1,0 +1,17 @@
+enum LOCK_VALUES {
+  LOCKED = 0x00,
+  UNLOCKED = 0x01,
+  UNLOCKED_AND_AUTOMATIC_RELOCK_DISABLED = 0x02,
+}
+
+enum DATA_VALUES {
+  UID = 0x00,
+  URL = 0x10,
+  TLM = 0x20,
+  EID = 0x40,
+}
+
+export {
+  LOCK_VALUES,
+  DATA_VALUES,
+};
