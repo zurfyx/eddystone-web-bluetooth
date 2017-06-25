@@ -30,7 +30,7 @@ const URL_CODES: HexTypes = {
   0x0d: '.gov',
 };
 
-export function decodeUrl(raw: DataView): string {
+function decodeUrl(raw: DataView): string {
   const scheme: string = URL_SCHEMES[raw.getInt8(0)];
   const url = Array.from(Array(raw.byteLength).keys())
     .slice(1)
@@ -42,7 +42,7 @@ export function decodeUrl(raw: DataView): string {
   return `${scheme}${url}`;
 }
 
-export function encodeUrl(val: string): DataView {
+function encodeUrl(val: string): DataView {
   const encoder = new TextEncoder('utf-8');
   const encoded: number[] = [];
   
@@ -86,3 +86,8 @@ function shortEncodeWithDict(val: string, hexTypes: HexTypes)
     jump: hexTypes[bestMatch].length,
   };
 }
+
+export {
+  encodeUrl,
+  decodeUrl,
+};
