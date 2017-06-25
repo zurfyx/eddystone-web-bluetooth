@@ -42,7 +42,9 @@
   "homepage": "https://github.com/zurfyx/eddystone-web-bluetooth#readme",
   "dependencies": {
     "@types/node": "^8.0.0",
+    "@types/text-encoding": "0.0.30",
     "@types/web-bluetooth": "0.0.2",
+    "text-encoding": "^0.6.4",
     "tslib": "^1.7.1"
   },
   "devDependencies": {
