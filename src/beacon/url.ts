@@ -34,8 +34,8 @@ function decodeUrl(raw: DataView): string {
   const scheme: string = URL_SCHEMES[raw.getInt8(0)];
   const url = Array.from(Array(raw.byteLength).keys())
     .slice(1)
-    .map((byteNum) => {
-      const byteVal: number = raw.getInt8(byteNum);
+    .map((bytePos) => {
+      const byteVal: number = raw.getInt8(bytePos);
       return URL_CODES[byteVal] || String.fromCharCode(byteVal);
     })
     .join('');

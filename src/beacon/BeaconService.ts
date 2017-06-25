@@ -34,6 +34,19 @@ export class BeaconService {
     return decodeUrl(rawUrl);
   }
 
+  async writeUrl(url: string): Promise<void> {
+    const uuid = constants.ADV_SLOT_DATA_CHARACTERISTIC_UUID;
+    const raw = encodeUrl(url);
+    if (raw.byteLength > 18) {
+      return Promise.reject('Encoded URL is longer than 18 bytes');
+    }
+    const urlBytes = Array.from(Array(raw.byteLength).keys()).map((bytePos) => {
+      return raw.getInt8(bytePos);
+    });
+    const fullBytes = new Int8Array([DATA_VALUES.URL, ...urlBytes]); // With URL type preceding.
+    return this.writeCharacteristic(uuid, fullBytes);
+  }
+
   async clearUrl(): Promise<void> {
     const uuid = constants.ADV_SLOT_DATA_CHARACTERISTIC_UUID;
     const clearByte = new Int8Array([0x00]);
