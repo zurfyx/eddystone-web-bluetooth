@@ -1,9 +1,9 @@
 import constants from '../constants';
 
 enum LOCK_VALUES {
-  'LOCKED' = 0x00,
-  'UNLOCKED' = 0x01,
-  'UNLOCKED AND AUTOMATIC RELOCK DISABLED' = 0x02,
+  LOCKED = 0x00,
+  UNLOCKED = 0x01,
+  UNLOCKED_AND_AUTOMATIC_RELOCK_DISABLED = 0x02,
 }
 
 export class BeaconService {
