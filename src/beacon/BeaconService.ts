@@ -68,6 +68,19 @@ export class BeaconService {
     return this.writeCharacteristic(uuid, dbmByte);
   }
 
+  async readAdvertisedTxPower(): Promise<number> {
+    const uuid = constants.ADVANCED_ADVERTISED_TX_POWER_CHARACTERISTIC_UUID;
+    const rawVal = await this.readCharacteristic(uuid);
+    const val = rawVal.getInt8(0);
+    return val;
+  }
+
+  async writeAdvertisedTxPower(dbm: number): Promise<void> {
+    const uuid = constants.ADVANCED_ADVERTISED_TX_POWER_CHARACTERISTIC_UUID;
+    const dbmByte = new Int8Array([dbm]);
+    return this.writeCharacteristic(uuid, dbmByte);
+  }
+
   /**
    * URL
    */
