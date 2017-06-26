@@ -16,6 +16,19 @@ export class BeaconService {
     return characteristic.writeValue(value);
   }
 
+  /**
+   * Interval.
+   */
+  async readInterval(): Promise<number> {
+    const uuid = constants.ADVERTISING_INTERVAL_CHARACTERISTIC_UUID;
+    const rawVal = await this.readCharacteristic(uuid);
+    const val = rawVal.getUint16(0, false);
+    return val;
+  }
+
+  /**
+   * Lock.
+   */
   async isLocked(): Promise<boolean> {
     const uuid = constants.EDDYSTONE_LOCK_STATE_CHARACTERISTIC_UUID;
     const rawVal = await this.readCharacteristic(uuid);
@@ -23,6 +36,9 @@ export class BeaconService {
     return val === LOCK_VALUES.LOCKED;
   }
 
+  /**
+   * URL.
+   */
   async readUrl(): Promise<string> {
     const uuid = constants.ADV_SLOT_DATA_CHARACTERISTIC_UUID;
     const rawVal = await this.readCharacteristic(uuid);
