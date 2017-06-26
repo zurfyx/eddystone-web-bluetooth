@@ -18,4 +18,13 @@ export class Beacon {
       .getPrimaryService(constants.EDDYSTONE_CONFIG_SERVICE_UUID);
     return new BeaconService(service);
   }
+
+  disconnect() : void {
+    const gatt: BluetoothRemoteGATTServer | undefined = this.device.gatt;
+    if (!(gatt && gatt.connected)) {
+      console.warn('Ignored disconnection request. You are not connected!');
+      return;
+    }
+    gatt.disconnect();
+  }
 }
