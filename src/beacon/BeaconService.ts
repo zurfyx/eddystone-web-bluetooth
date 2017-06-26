@@ -34,8 +34,9 @@ export class BeaconService {
   }
 
   /**
-   * Lock.
+   * LOCK
    */
+
   async isLocked(): Promise<boolean> {
     const uuid = constants.EDDYSTONE_LOCK_STATE_CHARACTERISTIC_UUID;
     const rawVal = await this.readCharacteristic(uuid);
@@ -44,7 +45,31 @@ export class BeaconService {
   }
 
   /**
-   * URL.
+   * RADIO
+   */
+
+  async readRadioTxPower(): Promise<number> {
+    const uuid = constants.RADIO_TX_POWER_CHARACTERISTIC_UUID;
+    const rawVal = await this.readCharacteristic(uuid);
+    const val = rawVal.getInt8(0);
+    return val;
+  }
+
+  /**
+   * Writes Radio Tx Power.
+   * @param dbm Tx power. Values should range between -100 and +20 dBm.
+   * If a power is selected that is not supported by the radio, the beacon should select
+   * the next highest power supported, or else the maximum power.
+   * @see https://github.com/google/eddystone/blob/master/eddystone-url/README.md#tx-power-level
+   */
+  async writeRadioTxPower(dbm: number): Promise<void> {
+    const uuid = constants.RADIO_TX_POWER_CHARACTERISTIC_UUID;
+    const dbmByte = new Int8Array([dbm]);
+    return this.writeCharacteristic(uuid, dbmByte);
+  }
+
+  /**
+   * URL
    */
   async readUrl(): Promise<string> {
     const uuid = constants.ADV_SLOT_DATA_CHARACTERISTIC_UUID;
