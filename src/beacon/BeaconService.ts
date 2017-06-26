@@ -113,4 +113,14 @@ export class BeaconService {
     const clearByte = new Int8Array([0x00]);
     return this.writeCharacteristic(uuid, clearByte);
   }
+
+  /**
+   * MISC
+   */
+
+  async factoryReset(): Promise<void> {
+    const uuid = constants.ADVANCED_FACTORY_RESET_CHARACTERISTIC_UUID;
+    const factoryResetByte = new Uint8Array([0x0B]);
+    return this.writeCharacteristic(uuid, factoryResetByte);
+  }
 }
