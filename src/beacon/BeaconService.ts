@@ -11,7 +11,7 @@ export class BeaconService {
     return characteristic.readValue();
   }
 
-  private async writeCharacteristic(uuid: string, value: BufferSource | Int8Array): Promise<void> {
+  private async writeCharacteristic(uuid: string, value: BufferSource): Promise<void> {
     const characteristic = await this.service.getCharacteristic(uuid);
     return characteristic.writeValue(value);
   }
@@ -22,8 +22,15 @@ export class BeaconService {
   async readInterval(): Promise<number> {
     const uuid = constants.ADVERTISING_INTERVAL_CHARACTERISTIC_UUID;
     const rawVal = await this.readCharacteristic(uuid);
-    const val = rawVal.getUint16(0, false);
+    const val = rawVal.getUint16(0, false); // Big-Endian.
     return val;
+  }
+
+  async writeInterval(ms: number): Promise<void> {
+    const uuid = constants.ADVERTISING_INTERVAL_CHARACTERISTIC_UUID;
+    const rawMs = new DataView(new ArrayBuffer(2)); // 2 * 8bit
+    rawMs.setUint16(0, ms, false);
+    return this.writeCharacteristic(uuid, rawMs);
   }
 
   /**
