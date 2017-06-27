@@ -40,7 +40,7 @@ export class BeaconService {
   async isLocked(): Promise<boolean> {
     const uuid = constants.EDDYSTONE_LOCK_STATE_CHARACTERISTIC_UUID;
     const rawVal = await this.readCharacteristic(uuid);
-    const val = rawVal.getInt8(0);
+    const val = rawVal.getUint8(0);
     return val === LOCK_VALUES.LOCKED;
   }
 
@@ -87,7 +87,7 @@ export class BeaconService {
   async readUrl(): Promise<string> {
     const uuid = constants.ADV_SLOT_DATA_CHARACTERISTIC_UUID;
     const rawVal = await this.readCharacteristic(uuid);
-    const type = rawVal.getInt8(0);
+    const type = rawVal.getUint8(0);
     if (type !== DATA_VALUES.URL) {
       return Promise.reject('Advertised data is not a URL');
     }
@@ -102,15 +102,15 @@ export class BeaconService {
       return Promise.reject('Encoded URL is longer than 18 bytes');
     }
     const urlBytes = Array.from(Array(raw.byteLength).keys()).map((bytePos) => {
-      return raw.getInt8(bytePos);
+      return raw.getUint8(bytePos);
     });
-    const fullBytes = new Int8Array([DATA_VALUES.URL, ...urlBytes]); // With URL type preceding.
+    const fullBytes = new Uint8Array([DATA_VALUES.URL, ...urlBytes]); // With URL type preceding.
     return this.writeCharacteristic(uuid, fullBytes);
   }
 
   async clearUrl(): Promise<void> {
     const uuid = constants.ADV_SLOT_DATA_CHARACTERISTIC_UUID;
-    const clearByte = new Int8Array([0x00]);
+    const clearByte = new Uint8Array([0x00]);
     return this.writeCharacteristic(uuid, clearByte);
   }
 

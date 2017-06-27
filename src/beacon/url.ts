@@ -31,11 +31,11 @@ const URL_CODES: HexTypes = {
 };
 
 function decodeUrl(raw: DataView): string {
-  const scheme: string = URL_SCHEMES[raw.getInt8(0)];
+  const scheme: string = URL_SCHEMES[raw.getUint8(0)];
   const url = Array.from(Array(raw.byteLength).keys())
     .slice(1)
     .map((bytePos) => {
-      const byteVal: number = raw.getInt8(bytePos);
+      const byteVal: number = raw.getUint8(bytePos);
       return URL_CODES[byteVal] || String.fromCharCode(byteVal);
     })
     .join('');
@@ -60,7 +60,7 @@ function encodeUrl(val: string): DataView {
 
   const buffer = new ArrayBuffer(encoded.length);
   const raw = new DataView(buffer);
-  encoded.forEach((character, i) => raw.setInt8(i, character));
+  encoded.forEach((character, i) => raw.setUint8(i, character));
   return raw;
 }
 
