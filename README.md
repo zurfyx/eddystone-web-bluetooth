@@ -8,7 +8,8 @@
 [![Code Climate](https://codeclimate.com/github/zurfyx/eddystone-web-bluetooth/badges/gpa.svg)](https://codeclimate.com/github/zurfyx/eddystone-web-bluetooth)
 
 <p align="center">
-  <img src="./assets/demo.gif" width="500" />
+  <img src="./assets/demo.gif" width="500" /><br />
+  <a href="#getting-started">Getting started source-code</a> using <a href="https://twitter.com/ThePhysicalWeb/status/770262699766755329">Physical Web beacons</a>
 </p>
 
 ## Features
@@ -77,3 +78,7 @@ Contributions are very welcome.
 ## License
 
 MIT © [Gerard Rovira Sánchez](//zurfyx.com)
+
+----
+
+Special thanks to @beaufortfrancois for providing https://github.com/beaufortfrancois/sandbox/blob/gh-pages/web-bluetooth/eddystone-url-config/app.js magnificent example source code.
