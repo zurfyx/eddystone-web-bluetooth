@@ -1,27 +1,74 @@
-# TypeScript Starter Kit
+# Eddystone Web Bluetooth
 
-> A starter kit for building a (library|framework|app) with TypeScript.
+> Web Bluetooth Eddystone made easier
 
-[![Build Status](https://travis-ci.org/zurfyx/typescript-starter-kit.svg?branch=master)](https://travis-ci.org/zurfyx/typescript-starter-kit)
-[![David](https://david-dm.org/zurfyx/typescript-starter-kit.svg)](https://david-dm.org/zurfyx/typescript-starter-kit)
-[![David](https://david-dm.org/zurfyx/typescript-starter-kit/dev-status.svg)](https://david-dm.org/zurfyx/typescript-starter-kit#info=devDependencies)
-[![Coverage Status](https://coveralls.io/repos/github/zurfyx/typescript-starter-kit/badge.svg?branch=master)](https://coveralls.io/github/zurfyx/typescript-starter-kit?branch=master)
-[![Code Climate](https://codeclimate.com/github/zurfyx/typescript-starter-kit/badges/gpa.svg)](https://codeclimate.com/github/zurfyx/typescript-starter-kit)
+[![Build Status](https://travis-ci.org/zurfyx/eddystone-web-bluetooth.svg?branch=master)](https://travis-ci.org/zurfyx/eddystone-web-bluetooth)
+[![David](https://david-dm.org/zurfyx/eddystone-web-bluetooth.svg)](https://david-dm.org/zurfyx/eddystone-web-bluetooth)
+[![David](https://david-dm.org/zurfyx/eddystone-web-bluetooth/dev-status.svg)](https://david-dm.org/zurfyx/eddystone-web-bluetooth#info=devDependencies)
+[![Code Climate](https://codeclimate.com/github/zurfyx/eddystone-web-bluetooth/badges/gpa.svg)](https://codeclimate.com/github/zurfyx/eddystone-web-bluetooth)
+
+<p align="center">
+  <img src="./assets/demo.gif" width="500" />
+</p>
 
 ## Features
 
-- TypeScript 2
-- Jest
-- TSLint ([airbnb config](https://www.npmjs.com/package/tslint-config-airbnb))
-- Travis CI
+- [x] Scan Eddystone beacons
+- [x] Connect / Disconnect
+- [x] Monitor connection status
+- [ ] Read Capabilities
+- [ ] Read / Write Active Slot
+- [x] Read / Write Advertising Interval
+- [x] Read / Write Radio Tx Power
+- [x] Read / Write Advertised Tx Power
+- [x] Read Lock State
+- [ ] Write Lock State
+- [ ] Read / Write Unlock
+- [ ] Read Public ECDH Key
+- [ ] Read EID Identity Key
+- [x] Read / Write ADV Slot Data
+- [x] Write Factory reset
+- [ ] Read / Write Remain Connectable
 
 ## Getting started
 
 ```
-npm run build
+npm install --save eddystone-web-bluetooth
 ```
 
-See [`package.json`](https://github.com/zurfyx/typescript-starter-kit/blob/master/package.json) for the rest of commands.
+```
+var eddystone = new Eddystone();
+var beacon, service;
+eddystone.request() // Scan for Eddystone beacons.
+  .then((newBeacon) => {
+    beacon = newBeacon;
+    return beacon.connect(); // Connect to the Beacon's GATT service.
+  })
+  .then((newService) => {
+    service = newService;
+    return service.isLocked(); // Check if the beacon is locked.
+  })
+  .then((isLocked) => {
+    if (isLocked) {
+      throw new Error('The beacon is locked. Can\'t write new URL');
+    }
+    // Beacon's not locked. We can proceed with the recording of the new URL.
+    // Keep in mind that the encoded URL must be longer than 18 characters.
+    return service.writeUrl('https://www.google.com');
+  })
+  .then(() => {
+    beacon.disconnect();
+    alert('OK!');
+  });
+```
+
+See the rest of the services [here](https://github.com/zurfyx/eddystone-web-bluetooth/blob/master/src/beacon/BeaconService.ts).
+
+## Development
+
+Eddystone Web Bluetooth implementation is based on the official specifications:
+
+[https://github.com/google/eddystone/tree/master/configuration-service](https://github.com/google/eddystone/tree/master/configuration-service)
 
 ## Contributions
 
