@@ -37,7 +37,7 @@
 npm install --save eddystone-web-bluetooth
 ```
 
-```
+```javascript
 var eddystone = new Eddystone();
 var beacon, service;
 eddystone.request() // Scan for Eddystone beacons.
@@ -51,10 +51,10 @@ eddystone.request() // Scan for Eddystone beacons.
   })
   .then((isLocked) => {
     if (isLocked) {
-      throw new Error('The beacon is locked. Can\'t write new URL');
+      return Promise.reject('The beacon is locked. Can\'t write new URL');
     }
     // Beacon's not locked. We can proceed with the recording of the new URL.
-    // Keep in mind that the encoded URL must be longer than 18 characters.
+    // Keep in mind that the encoded URL must NOT be longer than 18 characters.
     return service.writeUrl('https://www.google.com');
   })
   .then(() => {
