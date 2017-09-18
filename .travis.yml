@@ -12,5 +12,20 @@ script:
   - npm run lint
   - npm run coverage
 
+  - cd demo
+  - npm install
+  - npm test
+  - npm run build
+  - cd ..
+
 after_success:
   - cat ./coverage/lcov.info | coveralls
+
+deploy:
+  provider: script
+  script: scripts/demo-deploy.sh
+  skip_cleanup: true
+
+env:
+  global:
+    - secure: "AJQepBd/HbTe3amOZH8nbONfDXThxOHwj+4/RXyt+cIrTAMEqropCNBZfFm9wm7lUowyaqplh0zI7lJs6nMElGRJ/p9AiwRDc3FhRGj53jqRlKerJO8uuuKOL2SJLgcmW2kb69xLFDSVhER8N1/QlRjGSYPbwxJr0KxCtu6u10Mv9nWAB1+hBgnpA+VQbZtDi3JN06/UHbLg0ZuQX5kP/eQgK6AC5UhMFE/MELHzsw3HbnGwcD8H9+PrNhhR94xipAkuWQ10YzFKX3s65dwidXhmdmpY1ZaM4pderiPEBjxUeKYMITX/p18FI71XFgKLcwTRUdYlRq+wSZINhPEjUaVr1UB0ik4zKMyfTOssfRfQvrYjvcXv80LJQ7DtcXKXMGwN+wBTomOpSECLVEQjbXvgv8pSeryRxG/IRfuiOQh/fdcNLpFy1Yyms68pkqeGGm4e+yBKkuOQ1qJYf0RxK1UjXalXnauquJUMYEntGQf9ulHViWcu2KNslgU0h7jqPZRd5XQ6plRPQeHmOJquzDV94MJTz4MWDFTX03cNBR7Myr9FtzM71MpEiSXc0nYDYzyaryCJoWB43g0YbNSeYkeY8tXromWyJqpDKHt5ysgqTiTwwEOz/W+J4QPXriXeYzDAKOXrmviLivwcDh0nmKomLPnvWzbZHT4oRbCsiBk="

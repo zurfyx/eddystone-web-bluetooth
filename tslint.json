@@ -1,6 +1,7 @@
 {
   "extends": "tslint-config-airbnb",
   "rules": {
-    "no-inferrable-types": true
+    "no-inferrable-types": true,
+    "strict-boolean-expressions": false
   }
 }
