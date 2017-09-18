@@ -24,5 +24,5 @@ git reset upstream/gh-pages
 touch .
 
 git add -A .
-git commit -m "rebuild pages at ${rev}"
+git commit -m "rebuild pages at ${rev}" --allow-empty
 git push -q upstream HEAD:gh-pages
